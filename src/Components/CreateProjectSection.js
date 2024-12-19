@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GetProject from '../Utils/GetProject';
+import AddImage from '../Utils/AddImage';
 
 export default function CreateProjectSection() {
     const dispatch = useDispatch();
@@ -11,6 +12,7 @@ export default function CreateProjectSection() {
     const project_image = useSelector(state=>state.project_image);
     const [loading, setLoading] = useState(true);
     console.log(project_id);
+    const ref = useRef();
 
     useEffect(()=>{
         //GetProjects().then(res=>setProjectList(res))
@@ -45,12 +47,12 @@ export default function CreateProjectSection() {
                 })}  />
             </label>
             <div className="createProject__photo">
-                <img src={'/img/'+project_id+'.jpg'} alt={project_id} />
+                <img src={'http://localhost:4006/image/'+project_id+'.jpg'} alt={project_id} />
             </div>
             <label> Фото
-                <input type="file" className="createProject__input-photo" accept="image/*" />
+                <input ref={ref} type="file" className="createProject__input-photo" accept="image/*" />
             </label>
-            <label>Удалить фотографию <input type="checkbox" /></label>
+            <label onClick={()=>AddImage(ref.current.files[0], project_id)}>Удалить фотографию <input type="checkbox" /></label>
             </div>
         </div>
     )

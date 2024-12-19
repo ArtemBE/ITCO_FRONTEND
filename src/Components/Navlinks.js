@@ -3,6 +3,7 @@ import {NavLink} from 'react-router-dom'
 import GetProject from '../Utils/GetProject'
 import { useDispatch, useSelector } from 'react-redux'
 import DeleteProjects from '../Utils/DeleteProjects'
+import pluralize from '../Utils/pluralize'
 
 export default function Navlinks({set, list}) {
   const dispatch = useDispatch();
@@ -16,9 +17,12 @@ export default function Navlinks({set, list}) {
         <ul>
             <li><NavLink to='/CreateProject' onClick={()=>dispatch({type: 'set_default'})}>Создать</NavLink></li>
             <li onClick={()=>{
-              DeleteProjects(selected);
-              set(getDifference(list, selected));
-              dispatch({type: "unselectAll"});
+              //let conf = window.confirm("Вы действительно хотите удалить " + selected.length + " проектов?")
+              if(window.confirm("Вы действительно хотите удалить " + selected.length + " проект" + pluralize(selected.length) + "?")){
+                DeleteProjects(selected);
+                set(getDifference(list, selected));
+                dispatch({type: "unselectAll"});
+              }
             }}>Удалить</li>
         </ul>
     </nav>
