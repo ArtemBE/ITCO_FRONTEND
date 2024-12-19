@@ -17,7 +17,7 @@ export default function CreateProjectSection() {
     
         const fetchProject = async () => {
           try {
-            const result = await GetProject(75);
+            const result = await GetProject(project_id);
             return result;
           } catch (error) {
             console.error('Error fetching projects:', error);
@@ -45,7 +45,7 @@ export default function CreateProjectSection() {
                 })}  />
             </label>
             <div className="createProject__photo">
-                <img src="icons/Nature.jpg" alt="dd" />
+                <img src={'/img/'+project_id+'.jpg'} alt={project_id} />
             </div>
             <label> Фото
                 <input type="file" className="createProject__input-photo" accept="image/*" />

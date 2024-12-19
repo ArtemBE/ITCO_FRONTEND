@@ -9,13 +9,13 @@ import { NavLink, useNavigate } from 'react-router'
 //import AddProject2 from '../Utils/AddProject2'
 
 export default function Projects() {
-  const [projectList, setProjectList] = useState(null);
+  const [projectList, setProjectList] = useState([]);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(()=>{
     //GetProjects().then(res=>setProjectList(res))
-
+    dispatch({type: "unselectAll"});
     const fetchProjects = async () => {
       try {
         const result = await GetProjects(); // Выполняем асинхронный запрос
@@ -29,7 +29,7 @@ export default function Projects() {
   }, []);
   return (
     <>
-      <Navlinks/>
+      <Navlinks set={setProjectList} list={projectList}/>
       <div className="projects" onClick={()=>GetProjects()}>
         {projectList?.map(item=><Project project={item} key={item.project_id} />)}
       </div>

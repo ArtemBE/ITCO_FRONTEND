@@ -55,6 +55,11 @@
 
 .navlinks li{
     display: inline;
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-family: Ubuntu;
+    font-size: 30px;
+    cursor: pointer;
 }
 
 .navlinks a{

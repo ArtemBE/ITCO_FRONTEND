@@ -19,7 +19,10 @@ export default function Project(props) {
   return (
     <div className="project" onClick={handleClick}>
       {props.project.project_name}
-      <input type="checkbox" className="project__checkbox" onClick={e=>e.stopPropagation()} />
+      <input onChange={e=>e.target.checked?
+                      dispatch({type: 'select', payload: props.project.project_id}):
+                      dispatch({type: 'unselect', payload: props.project.project_id})
+                    } type="checkbox" className="project__checkbox" onClick={e=>e.stopPropagation()} />
     </div>
   )
 }

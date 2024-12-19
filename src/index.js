@@ -7,12 +7,14 @@ import {createStore, applyMiddleware} from 'redux';
 import {Provider} from 'react-redux';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import {thunk} from 'redux-thunk';
+import toPushed from './Utils/toPushes';
 
 const defaultState = {
   project_id: -1,
   project_name: '',
   project_description: '',
   project_image: '',
+  projects_selected: [],
 }
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -26,6 +28,14 @@ const reducer = (state = defaultState, action) => {
       return defaultState;
     case "edit_image": 
       return state;
+    case "select":
+      console.log(state.projects_selected);
+      return { ...state, projects_selected: toPushed(state.projects_selected, action.payload)}
+    case "unselect":
+      console.log(state.projects_selected);
+      return { ...state, projects_selected: state.projects_selected.filter(i=>i!==action.payload)}
+    case "unselectAll":
+      return { ...state, projects_selected: []}
     case "edit_project":
       return {
         ...state,
