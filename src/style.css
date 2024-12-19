@@ -21,7 +21,7 @@
     text-align: center;
     background-color: rgb(14, 40, 238);
     cursor: pointer;
-    transition: background-color 1s;
+    transition: background-color .4s;
     width: 243px;
     height: 150px;
     margin: 0 10px;
