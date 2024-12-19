@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import GetProject from '../Utils/GetProject';
 import AddImage from '../Utils/AddImage';
+import DeleteImage from '../Utils/DeleteImage';
 
 export default function CreateProjectSection() {
     const dispatch = useDispatch();
@@ -36,7 +37,7 @@ export default function CreateProjectSection() {
     if(!loading) return (
         <div className="createProjectSection">
             <div className="createProject">
-            <label> Название: 
+            <label onClick={()=>DeleteImage(project_id)}> Название: 
                 <input type="text" className="createProject__name-field" defaultValue={project_name} onChange={e=>dispatch({
                     type: "edit_name", payload: e.target.value
                 })} />
