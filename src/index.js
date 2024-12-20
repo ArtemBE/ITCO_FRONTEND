@@ -18,7 +18,8 @@ const defaultState = {
   has_image: false,
   image: null,
   image_path: null,
-  checkbox: false
+  checkbox: false,
+  image_path_exist: false
 }
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -44,6 +45,10 @@ const reducer = (state = defaultState, action) => {
       return { ...state, has_image: action.payload}
     case "setImagePath":
       return { ...state, image_path: action.payload}
+    case "setImagePathDelete":
+      return { ...state, image_path: action.payload, image_path_exist: false}
+    case "setImagePathAdd":
+      return { ...state, image_path: action.payload, image_path_exist: true}
     case "edit_project":
       return {
         ...state,

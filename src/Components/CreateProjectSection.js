@@ -11,9 +11,10 @@ export default function CreateProjectSection() {
     const project_name = useSelector(state=>state.project_name);
     const project_description = useSelector(state=>state.project_description);
     const project_image = useSelector(state=>state.project_image);
-    const image_path = useSelector(state=>state.image_path);
+    let image_path = useSelector(state=>state.image_path);
     const [loading, setLoading] = useState(true);
     //console.log(project_id);
+    let exist = useSelector(state=>state.image_path_exist);
     const ref = useRef();
     const img_ref = useRef();
     const checkbox_ref = useRef();
@@ -43,7 +44,7 @@ export default function CreateProjectSection() {
         console.log('path: '+image_path);
         dispatch({type: 'setImage', payload: null});
         dispatch({type: 'setCheckbox', payload: false});
-        dispatch({type: 'setImagePath', payload: 'http://localhost:4006/image/'+project_id+'.jpg'});
+        dispatch({type: 'setImagePathAdd', payload: 'http://localhost:4006/image/'+project_id+'.jpg'});
         const fetchProject = async () => {
           try {
             const result = await GetProject(project_id);
@@ -81,7 +82,7 @@ export default function CreateProjectSection() {
                 })}  />
             </label>
             <div className="createProject__photo">
-                <img ref={img_ref} src={image_path} alt={project_id} />
+                {(ref?.current?.files[0] || exist)?<img ref={img_ref} src={image_path} alt={project_id} />:<img ref={""} src={image_path} alt={project_id} />}
             </div>
             <label> Фото
                 <input onChange={(e)=>SetImageSRC(e.target.files[0])} ref={ref} type="file" className="createProject__input-photo" accept="image/*" />

@@ -19,22 +19,22 @@ export default function NavLinksCreate() {
                       console.log(project.checkbox);
                       if(project.checkbox){
                         DeleteImage(new_id)
-                        .then(()=>dispatch({type: 'setImagePath', payload: 'http://localhost:4006/image/'+new_id+'.jpg'}));
+                        .then(()=>dispatch({type: 'setImagePathDelete', payload: 'http://localhost:4006/image/'+new_id+'.jpg'}));
                       }
                       else if(project.image){
                         AddImage(project.image, new_id)
-                        .then(()=>dispatch({type: 'setImagePath', payload: 'http://localhost:4006/image/'+new_id+'.jpg'}));
+                        .then(()=>dispatch({type: 'setImagePathAdd', payload: 'http://localhost:4006/image/'+new_id+'.jpg'}));
                       }
                     }).then(()=>alert('Проект добавлен'))
                   }else{
                     EditProject({...project, project_id: project.project_id}).then(()=>{
                       if(project.checkbox){
                         DeleteImage(project.project_id)
-                        .then(()=>dispatch({type: 'setImagePath', payload: 'http://localhost:4006/image/'+project.project_id+'.jpg'}));
+                        .then(()=>dispatch({type: 'setImagePathDelete', payload: 'http://localhost:4006/image/'+project.project_id+'.jpg'}));
                       }
                       else if(project.image){
                         AddImage(project.image, project.project_id)
-                        .then(()=>dispatch({type: 'setImagePath', payload: 'http://localhost:4006/image/'+project.project_id+'.jpg'}));
+                        .then(()=>dispatch({type: 'setImagePathAdd', payload: 'http://localhost:4006/image/'+project.project_id+'.jpg'}));
                       }
                     }).then(()=>alert('Изменения сохранены'))
                   }
