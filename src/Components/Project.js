@@ -9,7 +9,7 @@ export default function Project(props) {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleClick = function(){
-    console.log(props.project);
+    //console.log(props.project);
     dispatch({
       type: "edit_id",
       payload: props.project.project_id

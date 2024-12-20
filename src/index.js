@@ -15,6 +15,10 @@ const defaultState = {
   project_description: '',
   project_image: '',
   projects_selected: [],
+  has_image: false,
+  image: null,
+  image_path: null,
+  checkbox: false
 }
 const reducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -36,6 +40,10 @@ const reducer = (state = defaultState, action) => {
       return { ...state, projects_selected: state.projects_selected.filter(i=>i!==action.payload)}
     case "unselectAll":
       return { ...state, projects_selected: []}
+    case "setHasImage":
+      return { ...state, has_image: action.payload}
+    case "setImagePath":
+      return { ...state, image_path: action.payload}
     case "edit_project":
       return {
         ...state,
@@ -44,6 +52,10 @@ const reducer = (state = defaultState, action) => {
         project_description: action.payload.project_description,
         project_image: action.payload.project_image,
       }
+    case "setImage":
+      return { ...state, image: action.payload}
+    case "setCheckbox":
+      return { ...state, checkbox: action.payload}
     default: 
       return state;
   }

@@ -1,11 +1,13 @@
 async function AddProject(project){
     //const [name, setName] = useState('');
-    let project_name = 'artem';
-    let project_description = 'artem project';
-    let project_image = 'ds';
     //const [response, setResponse] = useState(null);
 
-    const data = project;
+    const data = {
+        project_id: project.project_id,
+        project_name: project.project_name,
+        project_description: project.project_description,
+        project_image: project.project_image
+    };
 
     const res = await fetch('http://localhost:4006/api', {
         method: 'POST',
@@ -17,15 +19,9 @@ async function AddProject(project){
 
     console.log(5);
 
-    // Парсим JSON-ответ от сервера
     const result = await res.json();
-    //setResponse(result);
     console.log(result);
-    /* } catch (error) {
-    console.error('Error:', error);
-    //setResponse({ status: 'error', message: 'Something went wrong!' });
-    } */
-    console.log("add");
+    return result;
 }
 
 export default AddProject;
