@@ -38,13 +38,21 @@ export default function CreateProjectSection() {
         }
     }
 
+    function checkImageExists(url) {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => resolve(true); // Изображение существует
+            img.onerror = () => resolve(false); // Изображение не существует
+            img.src = url; // Устанавливаем путь к изображению
+        });
+    }
 
     useEffect(()=>{
         //GetProjects().then(res=>setProjectList(res))
         console.log('path: '+image_path);
         dispatch({type: 'setImage', payload: null});
         dispatch({type: 'setCheckbox', payload: false});
-        dispatch({type: 'setImagePathAdd', payload: 'http://localhost:4006/image/'+project_id+'.jpg'});
+        dispatch({type: 'setImagePath', payload: 'http://localhost:4006/image/'+project_id+'.jpg'});
         const fetchProject = async () => {
           try {
             const result = await GetProject(project_id);
@@ -55,6 +63,10 @@ export default function CreateProjectSection() {
         };
         if(project_id!=-1) fetchProject().then(res=>{
             dispatch({type: "edit_project", payload: res})
+            checkImageExists('http://localhost:4006/image/'+project_id+'.jpg')
+            .then((res)=>{
+                if(res) dispatch({type: 'setImagePathAdd', payload: 'http://localhost:4006/image/'+project_id+'.jpg'})
+            })
             setLoading(false);
             //console.log("state ne -1")
         })
@@ -82,7 +94,7 @@ export default function CreateProjectSection() {
                 })}  />
             </label>
             <div className="createProject__photo">
-                {(ref?.current?.files[0] || exist)?<img ref={img_ref} src={image_path} alt={project_id} />:<img ref={""} src={image_path} alt={project_id} />}
+                {(ref?.current?.files[0] || exist)?<img ref={img_ref} src={image_path} alt={project_id} />:<img ref={img_ref} src={""} alt={project_id} />}
             </div>
             <label> Фото
                 <input onChange={(e)=>SetImageSRC(e.target.files[0])} ref={ref} type="file" className="createProject__input-photo" accept="image/*" />
