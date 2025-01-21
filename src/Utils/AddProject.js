@@ -9,7 +9,7 @@ async function AddProject(project){
         project_image: project.project_image
     };
 
-    const res = await fetch('http://localhost:4006/api', {
+    const res = await fetch('/api', {
         method: 'POST',
         headers: {
         'Content-Type': 'application/json',

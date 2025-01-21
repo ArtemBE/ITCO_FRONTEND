@@ -5,21 +5,19 @@ import AddProject from '../Utils/AddProject'
 import DeleteProjects from '../Utils/DeleteProjects'
 import GetProjects from '../Utils/GetProjects'
 import { useDispatch } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router'
 //import AddProject2 from '../Utils/AddProject2'
 
 export default function Projects() {
   const [projectList, setProjectList] = useState([]);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   useEffect(()=>{
     //GetProjects().then(res=>setProjectList(res))
     dispatch({type: "unselectAll"});
     const fetchProjects = async () => {
       try {
-        const result = await GetProjects(); // Выполняем асинхронный запрос
-        setProjectList(result); // Обновляем состояние
+        const result = await GetProjects();
+        setProjectList(result);
       } catch (error) {
         console.error('Error fetching projects:', error);
       }

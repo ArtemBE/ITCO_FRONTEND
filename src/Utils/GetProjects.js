@@ -1,6 +1,6 @@
 async function GetProjects(){
     //const data = {/* project_id: project_id_array*/};
-    let res = await fetch('http://localhost:4006/api', {
+    let res = await fetch('/api', {
         method: 'GET',
         headers: {
         'Content-Type': 'application/json',

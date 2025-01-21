@@ -15,7 +15,7 @@ export default function Navlinks({set, list}) {
   return (
     <nav className="navlinks">
         <ul>
-            <li><NavLink to='/CreateProject' onClick={()=>dispatch({type: 'set_default'})}>Создать</NavLink></li>
+            <li><NavLink to='/createProject/-1' onClick={()=>dispatch({type: 'set_default'})}>Создать</NavLink></li>
             <li onClick={()=>{
               //let conf = window.confirm("Вы действительно хотите удалить " + selected.length + " проектов?")
               if(window.confirm("Вы действительно хотите удалить " + selected.length + " проект" + pluralize(selected.length) + "?")){

@@ -17,12 +17,15 @@ export default function Project(props) {
     navigate('/createProject');
   }
   return (
-    <div className="project" onClick={handleClick}>
-      {props.project.project_name}
-      <input onChange={e=>e.target.checked?
-                      dispatch({type: 'select', payload: props.project.project_id}):
-                      dispatch({type: 'unselect', payload: props.project.project_id})
-                    } type="checkbox" className="project__checkbox" onClick={e=>e.stopPropagation()} />
-    </div>
+    <NavLink to={`/createProject/${props.project.project_id}`}>
+      <div className="project">
+        {props.project.project_name}
+        <input onChange={e=>e.target.checked?
+                        dispatch({type: 'select', payload: props.project.project_id}):
+                        dispatch({type: 'unselect', payload: props.project.project_id})
+                      } type="checkbox" className="project__checkbox" onClick={e=>e.stopPropagation()} />
+      </div>
+    </NavLink>
+    
   )
 }

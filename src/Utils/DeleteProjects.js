@@ -1,7 +1,7 @@
 async function DeleteProjects(project_id_array){
     const data = { project_id: project_id_array};
     console.log('ВШВ')
-    const res = await fetch('http://localhost:4006/api', {
+    const res = await fetch('/api', {
         method: 'DELETE',
         headers: {
         'Content-Type': 'application/json',
