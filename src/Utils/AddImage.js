@@ -9,7 +9,7 @@ async function AddImage(img, id){
     const formData = new FormData();
     formData.append('image', img);
     try {
-        const response = await fetch('http://localhost:4006/api/image/' + id, {
+        const response = await fetch('/api/image/' + id, {
             method: 'POST',
             body: formData
         });

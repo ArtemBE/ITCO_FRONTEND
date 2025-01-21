@@ -6,7 +6,7 @@ async function EditProject(project){
         project_description: project.project_description,
         project_image: project.project_image
     };
-    const res = await fetch('http://localhost:4006/api', {
+    const res = await fetch('/api', {
         method: 'PUT',
         headers: {
         'Content-Type': 'application/json',

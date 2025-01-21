@@ -1,18 +1,26 @@
 import React, { useEffect, useRef } from 'react'
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 import GetProject from '../Utils/GetProject';
 import AddImage from '../Utils/AddImage';
 import DeleteImage from '../Utils/DeleteImage';
 
 export default function CreateProjectSection() {
     const dispatch = useDispatch();
-    const project_id = useSelector(state=>state.project_id);
+    const params = useParams();
+    const project_id = params.id;
     const project_name = useSelector(state=>state.project_name);
     const project_description = useSelector(state=>state.project_description);
     const project_image = useSelector(state=>state.project_image);
     let image_path = useSelector(state=>state.image_path);
     const [loading, setLoading] = useState(true);
+
+    dispatch({
+        type: "edit_id",
+        payload: project_id
+    });
+    
     //console.log(project_id);
     let exist = useSelector(state=>state.image_path_exist);
     const ref = useRef();
@@ -32,27 +40,20 @@ export default function CreateProjectSection() {
         }
         else{
             dispatch({type: 'setImage', payload: null});
-            dispatch({type: 'setImagePath', payload: 'http://localhost:4006/image/'+project_id+'.jpg'});
-            img_ref.current.src='http://localhost:4006/image/'+project_id+'.jpg';
+            dispatch({type: 'setImagePath', payload: '/image/'+project_id+'.jpg'});
+            img_ref.current.src='/image/'+project_id+'.jpg';
             
         }
     }
 
-    function checkImageExists(url) {
-        return new Promise((resolve) => {
-            const img = new Image();
-            img.onload = () => resolve(true); // Изображение существует
-            img.onerror = () => resolve(false); // Изображение не существует
-            img.src = url; // Устанавливаем путь к изображению
-        });
-    }
+    const checkImageExists = async url => (await fetch(url)).ok
 
     useEffect(()=>{
         //GetProjects().then(res=>setProjectList(res))
         console.log('path: '+image_path);
         dispatch({type: 'setImage', payload: null});
         dispatch({type: 'setCheckbox', payload: false});
-        dispatch({type: 'setImagePath', payload: 'http://localhost:4006/image/'+project_id+'.jpg'});
+        dispatch({type: 'setImagePath', payload: '/image/'+project_id+'.jpg'});
         const fetchProject = async () => {
           try {
             const result = await GetProject(project_id);
@@ -63,9 +64,12 @@ export default function CreateProjectSection() {
         };
         if(project_id!=-1) fetchProject().then(res=>{
             dispatch({type: "edit_project", payload: res})
-            checkImageExists('http://localhost:4006/image/'+project_id+'.jpg')
+            checkImageExists('/image/'+project_id+'.jpg')
             .then((res)=>{
-                if(res) dispatch({type: 'setImagePathAdd', payload: 'http://localhost:4006/image/'+project_id+'.jpg'})
+                if(res) {
+                    dispatch({type: 'setImagePathAdd', payload: '/image/'+project_id+'.jpg'})
+                    console.log("ыыы");
+                }
             })
             setLoading(false);
             //console.log("state ne -1")
@@ -94,7 +98,7 @@ export default function CreateProjectSection() {
                 })}  />
             </label>
             <div className="createProject__photo">
-                {(ref?.current?.files[0] || exist)?<img ref={img_ref} src={image_path} alt={project_id} />:<img ref={img_ref} src={""} alt={project_id} />}
+                {(console.log(ref?.current?.files[0]) || console.log(exist) || ref?.current?.files[0] || exist)?<img ref={img_ref} src={image_path} alt={project_id} />:<img ref={img_ref} src={""} alt={project_id} />}
             </div>
             <label> Фото
                 <input onChange={(e)=>SetImageSRC(e.target.files[0])} ref={ref} type="file" className="createProject__input-photo" accept="image/*" />

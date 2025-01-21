@@ -1,7 +1,7 @@
 async function DeleteImage(id){
     //console.log('http://localhost:4006/api/image/' + id);
     try {
-        const response = await fetch('http://localhost:4006/api/image/' + id, {
+        const response = await fetch('/api/image/' + id, {
             method: 'DELETE',
             body: JSON.stringify({id})
         });
